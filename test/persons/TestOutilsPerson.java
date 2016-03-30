@@ -12,14 +12,29 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 
-public class TestListes {
+/**
+ * Classe de test des listes de IPerson
+ * 
+ * @author GERLAND - LETOURNEUR
+ */
+public class TestOutilsPerson {
 
+	/**
+	 * Liste de IPerson servant au test
+	 */
 	private ArrayList<IPerson> liste;
-	private GregorianCalendar date;
-	
 	@Mock
     private IPerson person1, person2, person3, person4;
 	
+	/**
+	 * Date de test
+	 */
+	private GregorianCalendar date;
+	
+	/**
+	 * Initialisation des données de test et Mocks
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		
@@ -42,27 +57,35 @@ public class TestListes {
         liste.add(person4);
 	}
 
+	/**
+	 * Test du max et min incohérent
+	 */
 	@Test (expected = IllegalArgumentException.class)
 	public void testMaxMinException() {
-		
-		assertEquals(2, OutilsPerson.getListeEntre(liste, date, 50, 30).size());
+		assertEquals(2, OutilsPerson.getListBetween(liste, date, 50, 30).size());
 	}
 	
+	/**
+	 * Test de la fonction getListBetween
+	 */
 	@Test
-	public void testListeEntreValide() {
-
-		assertEquals(2, OutilsPerson.getListeEntre(liste, date, 20, 40).size());
+	public void testListBetween() {
+		assertEquals(2, OutilsPerson.getListBetween(liste, date, 20, 40).size());
 	}
 	
+	/**
+	 * Test de la fonction getAgePlus
+	 */
 	@Test
-	public void testPlusAgeValide() {
-
+	public void testAgePlus() {
 		assertEquals(94, OutilsPerson.getPlusAge(liste, date));
 	}
 	
+	/**
+	 * Test anonyme sur les noms et prenoms
+	 */
 	@Test
 	public void testAnonyme() {
-		
 		assertEquals(94, OutilsPerson.getPlusAge(liste, date));
 		
         Mockito.verify(person1, never()).getName();

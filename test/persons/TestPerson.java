@@ -7,51 +7,82 @@ import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 
-
+/**
+ * Classe de test des classes qui implémentent IPerson
+ * 
+ * @author GERLAND - LETOURNEUR
+ */
 public class TestPerson {
 	
-	IPerson maman;
+	/**
+	 * IPerson servant au test
+	 */
+	IPerson person;
 	
-	GregorianCalendar dateAujourdhui;
-	GregorianCalendar dateAvant;
-	GregorianCalendar dateNaissance;
+	/**
+	 * Dates de test pour les méthodes wasBorn() et getAge()
+	 */
+	GregorianCalendar dateToday;
+	GregorianCalendar dateBefore;
+	GregorianCalendar dateBirth;
 	
+	/**
+	 * Initialisation des données de test
+	 */
 	@Before
 	public void setUp() {
-		this.maman = new Person("Maman", "Letourneur", 1963, 12, 18);
+		this.person = new Person("Nom", "Prenom", 1963, 12, 18);
 		
-		this.dateAujourdhui = new GregorianCalendar();
-		this.dateAvant = new GregorianCalendar(1955, GregorianCalendar.DECEMBER, 18);
-		this.dateNaissance = new GregorianCalendar(1963, GregorianCalendar.DECEMBER, 18);
+		this.dateToday = new GregorianCalendar();
+		this.dateBefore = new GregorianCalendar(1955, GregorianCalendar.DECEMBER, 18);
+		this.dateBirth = new GregorianCalendar(1963, GregorianCalendar.DECEMBER, 18);
 	}
 	
+	/**
+	 * Test de l'age en fonction d'aujourd'hui
+	 */
 	@Test
-	public void testAgeValideAujourdhui() {
-		assertEquals(52,maman.getAge(this.dateAujourdhui));
+	public void testAgeToday() {
+		assertEquals(52,person.getAge(this.dateToday));
 	}
 	
+	/**
+	 * Test de l'age en fonction de la naissance
+	 */
 	@Test
-	public void testAgeValideNaissance() {
-		assertEquals(0,maman.getAge(this.dateNaissance));
+	public void testAgeBirth() {
+		assertEquals(0,person.getAge(this.dateBirth));
 	}
 	
+	/**
+	 * Test de l'age en fonction d'une date anterieure à la naissance
+	 */
 	@Test (expected = IllegalArgumentException.class)
-	public void testAgeInvalide() {
-		assertEquals(52,maman.getAge(this.dateAvant));
+	public void testAgeException() {
+		assertEquals(52,person.getAge(this.dateBefore));
 	}
 	
+	/**
+	 * Test de wasBorn() en fonction d'une date avant la naissance
+	 */
 	@Test
-	public void testBornValideAvant() {
-		assertFalse(maman.wasBorn(this.dateAvant));
+	public void testBornBefore() {
+		assertFalse(person.wasBorn(this.dateBefore));
 	}
 	
+	/**
+	 * Test de wasBorn() en fonction d'aujourd'hui
+	 */
 	@Test
-	public void testBornValideApres() {
-		assertTrue(maman.wasBorn(this.dateAujourdhui));
+	public void testBornToday() {
+		assertTrue(person.wasBorn(this.dateToday));
 	}
 	
+	/**
+	 * Test de wasBorn() en fonction de la date de la naissance
+	 */
 	@Test
-	public void testBornValideMemeJour() {
-		assertTrue(maman.wasBorn(this.dateNaissance));
+	public void testBornBirth() {
+		assertTrue(person.wasBorn(this.dateBirth));
 	}
 }
